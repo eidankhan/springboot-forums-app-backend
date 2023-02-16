@@ -3,21 +3,18 @@ package com.sprinboot.jwt.app.model;
 import javax.persistence.*;
 
 @Entity
-public class Comment {
+@Table(name = "likes")
+public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(length = 5000)
-    private String text;
 
     @ManyToOne
     private User user;
     @ManyToOne
-    @JoinColumn(name = "post_id")
     private Post post;
 
-
-    public Comment(){}
+    public Like(){}
 
     public Long getId() {
         return id;
@@ -25,14 +22,6 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public Post getPost() {
