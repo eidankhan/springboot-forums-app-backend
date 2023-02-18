@@ -7,7 +7,6 @@ import com.sprinboot.jwt.app.util.JwtResponse;
 import com.sprinboot.jwt.app.dto.UserDTO;
 import com.sprinboot.jwt.app.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -40,8 +39,11 @@ public class JwtAuthenticationController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-		return ResponseEntity.ok(userDetailsService.save(user));
+	public GenericResponse saveUser(@RequestBody UserDTO user) throws Exception {
+		UserDTO savedUser = userDetailsService.save(user);
+		if(savedUser != null)
+			return new GenericResponse(200, "New user created", savedUser);
+		return new GenericResponse(500, "Unable to save user");
 	}
 
 	private GenericResponse authenticate(String username, String password) throws Exception {

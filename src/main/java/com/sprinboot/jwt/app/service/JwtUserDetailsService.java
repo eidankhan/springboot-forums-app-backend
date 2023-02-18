@@ -34,10 +34,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 	}
 
 	public UserDTO save(UserDTO userDTO) {
-		User user = userTransformer.userDTOToUser(userDTO);
+		User user = userTransformer.transformUserDTOToUser(userDTO);
 		// Encoding password before saving to database
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 		User savedUser = userDao.save(user);
-		return userTransformer.userToUserDTO(savedUser);
+		return userTransformer.transformUserToUserDTO(savedUser);
 	}
 }
